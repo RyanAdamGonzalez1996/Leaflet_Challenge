@@ -1,9 +1,9 @@
 // Info needed from JSON:
 // Location (coordinates), magnitude, depth
-constant jsonData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+const jsonData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Create a createMap Function
-function createMap(magLessThree, magThreeFive, magFiveSeven, magGreaterSeven) {
+function createMap(magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreaterSeven) {
 
     // Create a tile Layer that will be the base 
     var lightMap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -20,7 +20,8 @@ function createMap(magLessThree, magThreeFive, magFiveSeven, magGreaterSeven) {
 
     // Create an overlayMap object
     var overlayMap = {
-        "Magnitude < 3:": magLessThree,
+        "Magnitude <1:": magLessOne,
+        "Magnitude 1-3:": magOneThree,
         "Magnitude 3-5:": magThreeFive,
         "Magnitude 5-7:": magFiveSeven,
         "Magnitude 7+:": magGreaterSeven
@@ -31,7 +32,7 @@ function createMap(magLessThree, magThreeFive, magFiveSeven, magGreaterSeven) {
         // Center of US
         center: [39.83, -98.58],
         zoom: 20,
-        layers: [lightMap, magLessThree, magThreeFive, magFiveSeven, magGreaterSeven]
+        layers: [lightMap, magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreaterSeven]
     });
 
     // Create a layer control, passing in the overlay maps
@@ -42,15 +43,20 @@ function createMap(magLessThree, magThreeFive, magFiveSeven, magGreaterSeven) {
 }
 
 // Create a createCircle Function
+function createCircle(response) {
 
     // Pull the earthquakes from the JSON
+    var earthquakes = response.features;
+    console.log(earthquakes);
 
     // Initalize an array to hold all of the locations of each earthquakes by magnitude
     // an array for each magnitude range;
     // 0-1,1-2,2-3,3-4,4-5,5-6,6-7,7-8,9+
 
     // Loop Through the earthqake array
-
+    for (var index = 0; index < earthquakes.length; index++){
+        var earthquake = earthquakes[index];
+        console.log(earthquake.properties.mag);
         // For each earthquake, create a circle with a color for respective Depth 
         // and size to reflect magnitude
         // Color Scale goes from Green - Yellow - Red
@@ -58,9 +64,10 @@ function createMap(magLessThree, magThreeFive, magFiveSeven, magGreaterSeven) {
 
 
         // Add the circle to the locations array to the respective magnitude
-  
+    }
     // Create the layer groups for each magnitude range and pass it to createMap
 
+}
 // Create a createLegend Function
     
     // Create a Legend

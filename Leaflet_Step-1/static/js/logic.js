@@ -56,7 +56,12 @@ function createCircle(response) {
     // Loop Through the earthqake array
     for (var index = 0; index < earthquakes.length; index++){
         var earthquake = earthquakes[index];
+
+        // Test magnitude
         console.log(earthquake.properties.mag);
+        // Test Depth
+        console.log(earthquake.geometry.coordinates[2]);
+
         // For each earthquake, create a circle with a color for respective Depth 
         // and size to reflect magnitude
         // Color Scale goes from Green - Yellow - Red

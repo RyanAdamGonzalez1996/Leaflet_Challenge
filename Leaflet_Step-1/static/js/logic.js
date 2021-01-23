@@ -40,6 +40,38 @@ function createMap(magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreat
         collapsed: false
     }).addTo(map);
 
+    // Create the legend
+    var legend = L.control({
+        position: "bottomright"
+      });
+    
+    // Legend details
+    legend.onAdd = function() {
+        var div = L.DomUtil.create("div", "legend");
+
+        var depthLevels = ["< 10", "10 - 30", "30 - 50", "50 - 70", "70 - 90", "90+"];
+        var colors = [
+            "darkgreen",
+            "green",
+            "lightgreen",
+            "yellow",
+            "orange",
+            "orangered",
+            "red"
+        ];
+
+        // Looping through the legend arrays
+        for (var i = 0; i < colors.length; i++) {
+            div.innerHTML +=
+            "<i style='background: " + colors[i] + "'></i> " +
+            depthLevels[i] + "<br>";
+        }
+        return div;
+    };
+    
+    // Add legend to map
+    legend.addTo(map);
+
 }
 
 // Create a createCircle Function
@@ -50,7 +82,7 @@ function createCircle(response) {
 
     // Pull the earthquakes from the JSON
     var earthquakes = response.features;
-    console.log(earthquakes);
+//    console.log(earthquakes);
 
     // Initalize an array to hold all of the locations of each earthquakes by magnitude
     // an array for each magnitude range;
@@ -65,16 +97,16 @@ function createCircle(response) {
         var earthquake = earthquakes[index];
 
         // Test magnitude
-        console.log(earthquake.properties.mag);
+  //      console.log(earthquake.properties.mag);
         // Test Depth
-        console.log(earthquake.geometry.coordinates[2]);
+    //    console.log(earthquake.geometry.coordinates[2]);
 
         // Variables to hold the Coordinates
         var lon = earthquake.geometry.coordinates[1];
         var lat = earthquake.geometry.coordinates[0];
         //Test Coordinate variables
-        console.log(lon);
-        console.log(lat);
+      //  console.log(lon);
+        //console.log(lat);
 
         // Variables to hold Depth and Magnitude
         var depth = earthquake.geometry.coordinates[2];
@@ -115,28 +147,32 @@ function createCircle(response) {
             magOneThree.push(earthquakeCircle);
         }else {
             magLessOne = [];
-        }
+            }
       
     }
 
-    console.log(magGreaterSeven);
-    console.log(magFiveSeven);
-    console.log(magThreeFive);
-    console.log(magOneThree);
-    console.log(magLessOne);
     // Create the layer groups for each magnitude range and pass it to createMap
     createMap(L.layerGroup(magLessOne), L.layerGroup(magOneThree), L.layerGroup(magThreeFive), L.layerGroup(magFiveSeven), L.layerGroup(magGreaterSeven));
 
 }
 // Create a createLegend Function
-    
+function createLegend() {
     // Create a Legend
-
+    var legend = {
+        "< 10": "green",
+        "10-30": "lightgreen",
+        "30-50": "yellow",
+        "50-70": "orange",
+        "70-90": "orangred",
+        "90+": "red"
+    };
     // Append a div element to the HTML to add the Legend
-
+    
     // Add the Legend to the map
+}
 
 // Read in JSON and and pass parameters to the createCircle Function
 d3.json(jsonData, createCircle);
 
 // Add the Legend to the Map
+

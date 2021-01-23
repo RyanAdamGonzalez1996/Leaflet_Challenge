@@ -1,6 +1,6 @@
 // Info needed from JSON:
 // Location (coordinates), magnitude, depth
-
+test
 // Create a createMap Function
 
     // Create a tile Layer that will be the base 

@@ -44,6 +44,9 @@ function createMap(magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreat
 
 // Create a createCircle Function
 function createCircle(response) {
+    // Color Scale goes from DarkGreen - LightGreen - Yellow
+    // Darker higher depth lighter lower depth
+    // Size will be a the magnitude multiplied by a base number to scale appropriately
 
     // Pull the earthquakes from the JSON
     var earthquakes = response.features;
@@ -51,7 +54,11 @@ function createCircle(response) {
 
     // Initalize an array to hold all of the locations of each earthquakes by magnitude
     // an array for each magnitude range;
-    // 0-1,1-2,2-3,3-4,4-5,5-6,6-7,7-8,9+
+    var magLessOne = [];
+    var magOneThree = [];
+    var magThreeFive = [];
+    var magFiveSeven = [];
+    var magGreaterSeven = [];
 
     // Loop Through the earthqake array
     for (var index = 0; index < earthquakes.length; index++){
@@ -62,15 +69,58 @@ function createCircle(response) {
         // Test Depth
         console.log(earthquake.geometry.coordinates[2]);
 
+        // Variables to hold the Coordinates
+        var lon = earthquake.geometry.coordinates[1];
+        var lat = earthquake.geometry.coordinates[0];
+        //Test Coordinate variables
+        console.log(lon);
+        console.log(lat);
+
+        // Variables to hold Depth and Magnitude
+        var depth = earthquake.geometry.coordinates[2];
+        var magnitude = earthquake.properties.mag;
+
+        // Set depthColor to a value corresponding to the earthquakes depth
+        if (depth > 250) {
+            var depthColor = "darkgreen";
+        }else if (depth >= 200) {
+            var depthColor = "green";
+        }else if (depth >= 150) {
+            var depthColor = "lightgreen";
+        }else if (depth >= 100) {
+            var depthColor = "yellow";
+        }else if (depth >= 50) {
+            var depthColor = "orange";
+        }else {
+            var depthColor = "red";
+        }
+
         // For each earthquake, create a circle with a color for respective Depth 
         // and size to reflect magnitude
-        // Color Scale goes from Green - Yellow - Red
-        // Size will be a the magnitude multiplied by a base number to scale appropriatel
-
+        var earthquakeCircle = L.circle([lon,lat], {
+            color: depthColor,
+            fillcolor: depthColor,
+            fillOpacity: 0.75,
+            radius: 1000 * magnitude
+        });
 
         // Add the circle to the locations array to the respective magnitude
+        if (magnitude > 7) {
+            magGreaterSeven.push(earthquakeCircle);
+        }else if (magnitude >= 5) {
+            magFiveSeven.push(earthquakeCircle);
+        }else if (magnitude >= 3) {
+            magThreeFive.push(earthquakeCircle);
+        }else if (magnitude >= 1) {
+            magOneThree.push(earthquakeCircle);
+        }else {
+            magLessOne = [];
+        }
+
     }
+    
     // Create the layer groups for each magnitude range and pass it to createMap
+    createMap(L.layerGroup(magLessOne), L.layerGroup(magOneThree), L.layerGroup(magThreeFive), L.layerGroup(magFiveSeven), L.layerGroup(magGreaterSeven));
 
 }
 // Create a createLegend Function

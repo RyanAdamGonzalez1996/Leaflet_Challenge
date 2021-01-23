@@ -28,10 +28,10 @@ function createMap(magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreat
     };
 
     // Create the map object
-    var map = L.map("mapid", {
+    var map = L.map("map", {
         // Center of US
-        center: [39.83, -98.58],
-        zoom: 20,
+        center: [0, 0],
+        zoom: 2,
         layers: [lightMap, magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreaterSeven]
     });
 
@@ -81,15 +81,15 @@ function createCircle(response) {
         var magnitude = earthquake.properties.mag;
 
         // Set depthColor to a value corresponding to the earthquakes depth
-        if (depth > 250) {
+        if (depth > 150) {
             var depthColor = "darkgreen";
-        }else if (depth >= 200) {
-            var depthColor = "green";
-        }else if (depth >= 150) {
-            var depthColor = "lightgreen";
         }else if (depth >= 100) {
-            var depthColor = "yellow";
+            var depthColor = "green";
+        }else if (depth >= 75) {
+            var depthColor = "lightgreen";
         }else if (depth >= 50) {
+            var depthColor = "yellow";
+        }else if (depth >= 25) {
             var depthColor = "orange";
         }else {
             var depthColor = "red";
@@ -101,7 +101,7 @@ function createCircle(response) {
             color: depthColor,
             fillcolor: depthColor,
             fillOpacity: 0.75,
-            radius: 1000 * magnitude
+            radius: 5000 * magnitude
         });
 
         // Add the circle to the locations array to the respective magnitude
@@ -116,9 +116,14 @@ function createCircle(response) {
         }else {
             magLessOne = [];
         }
-
+      
     }
-    
+
+    console.log(magGreaterSeven);
+    console.log(magFiveSeven);
+    console.log(magThreeFive);
+    console.log(magOneThree);
+    console.log(magLessOne);
     // Create the layer groups for each magnitude range and pass it to createMap
     createMap(L.layerGroup(magLessOne), L.layerGroup(magOneThree), L.layerGroup(magThreeFive), L.layerGroup(magFiveSeven), L.layerGroup(magGreaterSeven));
 

@@ -81,18 +81,18 @@ function createCircle(response) {
         var magnitude = earthquake.properties.mag;
 
         // Set depthColor to a value corresponding to the earthquakes depth
-        if (depth > 150) {
-            var depthColor = "darkgreen";
-        }else if (depth >= 100) {
-            var depthColor = "green";
-        }else if (depth >= 75) {
-            var depthColor = "lightgreen";
-        }else if (depth >= 50) {
-            var depthColor = "yellow";
-        }else if (depth >= 25) {
-            var depthColor = "orange";
-        }else {
+        if (depth > 90) {
             var depthColor = "red";
+        }else if (depth >= 70) {
+            var depthColor = "orangered";
+        }else if (depth >= 50) {
+            var depthColor = "orange";
+        }else if (depth >= 30) {
+            var depthColor = "yellow";
+        }else if (depth >= 10) {
+            var depthColor = "lightgreen";
+        }else {
+            var depthColor = "green";
         }
 
         // For each earthquake, create a circle with a color for respective Depth 
@@ -100,7 +100,7 @@ function createCircle(response) {
         var earthquakeCircle = L.circle([lon,lat], {
             color: depthColor,
             fillcolor: depthColor,
-            fillOpacity: 0.75,
+            fillOpacity: 0.70,
             radius: 5000 * magnitude
         });
 
@@ -138,4 +138,5 @@ function createCircle(response) {
 
 // Read in JSON and and pass parameters to the createCircle Function
 d3.json(jsonData, createCircle);
+
 // Add the Legend to the Map

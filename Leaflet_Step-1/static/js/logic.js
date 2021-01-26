@@ -39,13 +39,13 @@ function createMap(magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreat
     L.control.layers(baseMap, overlayMap, {
         collapsed: false
     }).addTo(map);
-
+    
     // Create the legend
     var legend = L.control({
         position: "bottomright"
       });
     
-    // Update Legend
+    // Update Legsend
     legend.onAdd = function() {
         var div = L.DomUtil.create("div", "legend");
 
@@ -61,18 +61,16 @@ function createMap(magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreat
         ];
 
         // Looping through the legend arrays
-        for (var i = 0; i < colors.length; i++) {
+        for (var i = 0; i < colors.length - 1; i++) {
             div.innerHTML +=
-            depthLevels[i] + "</br>";
-            //`<h1 style = "color:${color[i]}">` + depthLevels[i] + "</h1>";
+            `<h8 style="color:${colors[i]}">` + depthLevels[i] + '</h8>' + `</br>`; 
         }
+
         return div;
     };
     
     // Add legend to map
     legend.addTo(map);
- 
-
 }
 
 // Create a createCircle Function

@@ -45,7 +45,7 @@ function createMap(magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreat
         position: "bottomright"
       });
     
-    // Legend details
+    // Update Legend
     legend.onAdd = function() {
         var div = L.DomUtil.create("div", "legend");
 
@@ -63,14 +63,15 @@ function createMap(magLessOne, magOneThree, magThreeFive, magFiveSeven, magGreat
         // Looping through the legend arrays
         for (var i = 0; i < colors.length; i++) {
             div.innerHTML +=
-            "<i style='background: " + colors[i] + "'></i> " +
-            depthLevels[i] + "<br>";
+            depthLevels[i] + "</br>";
+            //`<h1 style = "color:${color[i]}">` + depthLevels[i] + "</h1>";
         }
         return div;
     };
     
     // Add legend to map
     legend.addTo(map);
+ 
 
 }
 
